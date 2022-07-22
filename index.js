@@ -1,6 +1,7 @@
 const lightningHash = (data) => {
   return "#" + data + "#";
 }
+
 class Block {
   constructor(data, hash, lastHash){
     this.data = data;
@@ -9,7 +10,21 @@ class Block {
   }
 }
 
+class Blockchain {
+  constructor(){
+  const genesis = new Block("gen-data", "gen-hash", "gen-last-hash");
+  this.chain = [genesis];
+  }
+  addBlock(data){
+    const lastHash = this.chain[this.chain.length - 1].hash;
+    const hash = lightningHash(data + lastHash);
+    const Block = new Block(data, hash, lastHash);
+    this.chain.push(Block);
+  }
+  
+}
 
-const newBlock = new Block("new-data", "new-hash", lightningHash("data"))
-console.log(newBlock);
+const chain = new Blockchain();
+console.log(chain);
+
 
